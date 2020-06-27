@@ -1,17 +1,9 @@
 package myproject.controller;
 
-import myproject.model.BadStatus;
-import myproject.model.Branches;
-import myproject.repository.MyCrudRepository;
 import myproject.service.BranchesService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.math.BigDecimal;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 /**
  * @author paveldikin
@@ -26,7 +18,7 @@ public class Controller {
     String status = "branch not found";
 
     @GetMapping("/branches/{id}")
-    public ResponseEntity greeting(@PathVariable Long id) {
+    public ResponseEntity getById(@PathVariable(required = false) Long id) {
         System.out.println("id = " + id);
         ResponseEntity resp = service.getById(id);
         System.out.println("return = " + resp);
@@ -34,10 +26,20 @@ public class Controller {
     }
 
     @GetMapping("/branches")
-    public ResponseEntity greeting(@RequestParam Double lat, @RequestParam Double lon) {
+    public ResponseEntity getNearest(@RequestParam Double lat, @RequestParam Double lon) {
         System.out.println("lat = " + lat + "; lon = " + lon);
         return service.getNearest(lat, lon);
     }
+
+//     http://IP:8082/branches/{id}/predict?dayOfWeek=int&hourOfDay=int
+    @GetMapping("/branches/{id}/predict")
+    public ResponseEntity getPredicting(@PathVariable(required = false) Long id, @RequestParam(required = false) Integer dayOfWeek, @RequestParam(required = false) Integer hourOfDay) {
+        System.out.println("id = " + id + "; dayOfWeek = " + dayOfWeek + "; hourOfDay = " + hourOfDay);
+
+        return service.getPredicting(id, dayOfWeek, hourOfDay);
+    }
+
+
 
 
 

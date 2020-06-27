@@ -28,4 +28,10 @@ public class Branches {
     private String address;
     @Transient
     private Long distance;
+    @Transient
+    private Integer dayOfWeek;
+    @Transient
+    private Integer hourOfDay;
+    @Transient
+    private Long predicting;
 }

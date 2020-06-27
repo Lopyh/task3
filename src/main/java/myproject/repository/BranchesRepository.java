@@ -12,7 +12,7 @@ import java.util.List;
  * @date 27.06.2020
  */
 @Repository
-public interface MyCrudRepository extends CrudRepository<Branches,Long>{
+public interface BranchesRepository extends CrudRepository<Branches,Long>{
     Branches findBranchesById(Long id);
     List<Branches> findAll();
 }
