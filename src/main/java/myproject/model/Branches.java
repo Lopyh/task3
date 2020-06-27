@@ -1,10 +1,13 @@
 package myproject.model;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.Transient;
 import java.math.BigDecimal;
 
 /**
@@ -14,11 +17,15 @@ import java.math.BigDecimal;
 @Getter
 @Setter
 @Entity
+@ToString
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class Branches {
     @Id
     private Long id;
     private String title;
-    private BigDecimal lon;
-    private  BigDecimal lat;
+    private Double lon;
+    private Double lat;
     private String address;
+    @Transient
+    private Long distance;
 }

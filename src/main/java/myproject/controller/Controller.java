@@ -3,9 +3,15 @@ package myproject.controller;
 import myproject.model.BadStatus;
 import myproject.model.Branches;
 import myproject.repository.MyCrudRepository;
+import myproject.service.BranchesService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.math.BigDecimal;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * @author paveldikin
@@ -15,22 +21,23 @@ import org.springframework.web.bind.annotation.*;
 public class Controller {
 
     @Autowired
-    MyCrudRepository repository;
+    BranchesService service;
 
     String status = "branch not found";
 
     @GetMapping("/branches/{id}")
     public ResponseEntity greeting(@PathVariable Long id) {
-        System.out.println("get branches id = " + id);
-        if (id != null){
-            Branches branches = repository.findBranchesById(id);
-            if (branches != null){
-                return ResponseEntity.ok(branches);
-            }
-        }
-        return ResponseEntity.badRequest().body(new BadStatus());
+        System.out.println("id = " + id);
+        ResponseEntity resp = service.getById(id);
+        System.out.println("return = " + resp);
+        return resp;
     }
 
+    @GetMapping("/branches")
+    public ResponseEntity greeting(@RequestParam Double lat, @RequestParam Double lon) {
+        System.out.println("lat = " + lat + "; lon = " + lon);
+        return service.getNearest(lat, lon);
+    }
 
 
 
